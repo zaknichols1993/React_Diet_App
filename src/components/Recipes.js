@@ -11,12 +11,11 @@ class Recipes extends Component {
             query: '',
             cuisine: '',
             diet: '',
-            intolerances: []
+            intolerance: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChecked = this.handleChecked.bind(this);
     }
 
     componentDidMount() {
@@ -28,15 +27,10 @@ class Recipes extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    handleChecked(event) {
-        //this.setState({value: event.option});
-        this.setState({ intolerances: Array.from(event.target.selectedOptions, (intolerance) => intolerance.value) });
-    }
-
     handleSubmit(event) {
-        const { query, cuisine, diet, intolerances } = this.state;
+        const { query, cuisine, diet, intolerance } = this.state;
         event.preventDefault();
-        fetch(`https://api.spoonacular.com/recipes/search?query=${query}&cuisine=${cuisine}&diet=${diet}&intolerances=${intolerances}&number=10&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+        fetch(`https://api.spoonacular.com/recipes/search?query=${query}&cuisine=${cuisine}&diet=${diet}&intolerances=${intolerance}&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -60,7 +54,7 @@ class Recipes extends Component {
 
 
     render() {
-        const { error, isLoaded, recipes, query, cuisine, diet, intolerances } = this.state;
+        const { error, isLoaded, recipes, query, cuisine, diet, intolerance } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -107,7 +101,7 @@ class Recipes extends Component {
                         <div className="form-group">
                             <label >
                                 Intolerances:
-                            <select multiple={true} className="m-1 form-control" value={intolerances} name="intolerances" onChange={this.handleChecked} >
+                            <select className="m-1 form-control" value={intolerance} name="intolerance" onChange={this.handleChange} >
                                     <option value="">None</option>
                                     <option value="Soy Free">Soy Free</option>
                                     <option value="Peanut Free">Peanut Free</option>
@@ -120,7 +114,6 @@ class Recipes extends Component {
                     </form>
                     <ul className="container col-xs-12">
                         {recipes.map(recipe => (
-                            <Link to={`recipes/${recipe.id}/information`}>
                                 <li key={recipe.id} className="recipes-li">
                                     <div className="media rounded">
                                         <img className="height recipes-img" alt="recipe" src={`https://spoonacular.com/recipeImages/${recipe.image}`} />
@@ -128,10 +121,10 @@ class Recipes extends Component {
                                             <h5>{recipe.title}</h5>
                                             <div>Time to cook: {recipe.readyInMinutes} Minutes</div>
                                             <div>Servings: {recipe.servings}</div>
+                                            <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary">View Details</Link>
                                         </div>
                                     </div>
                                 </li>
-                            </Link>
                         ))}
                     </ul>
                 </Fragment>

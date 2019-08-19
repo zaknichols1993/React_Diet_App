@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
 
-export default class Recipe extends Component {
+class Recipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -9,12 +8,13 @@ export default class Recipe extends Component {
             isLoaded: false,
             recipe: [],
             ingredients: [],
-            instructions: []
+            instructions: [],
+            nutrition: []
         };
     }
     componentDidMount() {
         const { id } = this.props.match.params;
-        fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+        fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -23,7 +23,8 @@ export default class Recipe extends Component {
                         isLoaded: true,
                         recipe: result,
                         ingredients: result.extendedIngredients,
-                        instructions: result.analyzedInstructions[0].steps
+                        instructions: result.analyzedInstructions[0].steps,
+                        nutrition: result.nutrition.nutrients
                     });
                 },
                 // Note: it's important to handle errors here
@@ -39,9 +40,17 @@ export default class Recipe extends Component {
     }
     render() {
         const { id } = this.props.match.params;
-        const { title, image, readyInMinutes, servings } = this.state.recipe;
+        const { title, image, readyInMinutes, servings, spoonacularScore } = this.state.recipe;
         const ingredients = this.state.ingredients;
         const instructions = this.state.instructions;
+        const nutrition = this.state.nutrition.filter(nutrient =>
+            nutrient.title === 'Calories' ||
+            nutrient.title === 'Protein' ||
+            nutrient.title === 'Carbohydrates' ||
+            nutrient.title === 'Fat' ||
+            nutrient.title === 'Sugar' ||
+            nutrient.title === 'Fiber'
+        )
         return (
             <div className="container">
                 <div>ID: {id}</div>
@@ -56,7 +65,16 @@ export default class Recipe extends Component {
                     <div className="col text-center">
                         Servings: {servings}
                     </div>
+                    <div className="col text-center">
+                        Score: {spoonacularScore}%
+                    </div>
                 </div>
+                <ul className="col-md-6">
+                    <h5>Nutrition</h5>
+                    {nutrition.map(nutrient => (
+                        <li key={nutrient.title} className="recipe-li">{nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}</li>
+                    ))}
+                </ul>
                 <div className="row mt-2">
                     <ul className="col-md-6">
                         <h5>Ingredients</h5>
@@ -75,3 +93,5 @@ export default class Recipe extends Component {
         )
     }
 }
+
+export default Recipe;

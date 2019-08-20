@@ -45,7 +45,7 @@ class MenuItem extends Component {
             <div className="container">
                 <div>id: {id}</div>
                 <h3>{title}</h3>
-                <img className="col-md-6 offset-md-3 my-3" src={image[1]} />
+                <img className="col-md-6 offset-md-3 my-3" src={image[1]} alt={title} />
                 <div className="row">
                     {Object.entries(nutrition).map(([key, value], i) => {
                         return (

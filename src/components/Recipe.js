@@ -7,66 +7,48 @@ class Recipe extends Component {
             error: null,
             isLoaded: false,
             recipe: [],
-            ingredients: [],
-            instructions: [],
-            nutrition: []
+            // ingredients: [],
+            // instructions: [],
+            // nutrition: []
         };
 
     }
-    componentDidMount() {
+
+    async componentDidMount() {
         const { id } = this.props.match.params;
-        fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=bb6a675616934bed81e967cc50497f10`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    // console.log(result)
-                    // // if (array.length > 0 && arrayTwo.length > 0 && arrayThree.length > 0) {
-                    // //     // do something
-                    // // }
-                    // if (!instructions) {
-                    //     console.log(instructions)
-                    //     this.setState({
-                    //         recipe: result,
-                    //         ingredients: result.extendedIngredients,
-                    //         nutrition: result.nutrition.nutrients,
-                    //         instructions: [],
-                    //         isLoaded: true,
-                    //     });
-                    // } else {
-                    this.setState({
-                        recipe: result,
-                        ingredients: result.extendedIngredients,
-                        nutrition: result.nutrition.nutrients,
-                        instructions: result.analyzedInstructions,
-                        isLoaded: true,
-                    });
-                    // else {
-                    // this.setState({
-                    //     recipe: result,
-                    //     ingredients: result.extendedIngredients,
-                    //     instructions: result.analyzedInstructions[0].steps,
-                    //     nutrition: result.nutrition.nutrients,
-                    //     isLoaded: true,
-                    // });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+        try {
+            const data = await fetch(
+                `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=bb6a675616934bed81e967cc50497f10`
+            );
+            const result = await data.json();
+            console.log(result);
+            this.setState({
+                isLoaded: true,
+                recipe: result,
+            });
+        } catch (error) {
+            this.setState({
+                isLoaded: true,
+                error,
+            });
+        }
     }
 
     render() {
+        const { isLoaded } = this.state;
+        if (!isLoaded) return <div>Loading...</div>
         const { id } = this.props.match.params;
-        const { title, image, readyInMinutes, servings, spoonacularScore } = this.state.recipe;
-        const ingredients = this.state.ingredients;
-        const instructions = this.state.instructions;
-        const nutrition = this.state.nutrition.filter(nutrient =>
+        const {
+            title,
+            image,
+            readyInMinutes,
+            servings,
+            spoonacularScore,
+            extendedIngredients: ingredients,
+            analyzedInstructions: instructions,
+            nutrition: { nutrients }
+        } = this.state.recipe;
+        const filtered = nutrients.filter(nutrient =>
             nutrient.title === 'Calories' ||
             nutrient.title === 'Protein' ||
             nutrient.title === 'Carbohydrates' ||
@@ -95,7 +77,7 @@ class Recipe extends Component {
                 <div className="row mt-2">
                     <ul className="col-xs-12 col-md-4">
                         <h5>Nutrition Info</h5>
-                        {nutrition.map(nutrient => (
+                        {filtered.map(nutrient => (
                             <li key={nutrient.title} className="recipe-li">{nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}</li>
                         ))}
                     </ul>

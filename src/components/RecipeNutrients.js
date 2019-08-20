@@ -22,40 +22,33 @@ class RecipeNutrients extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        this.setState({ isLoaded: true })
+    async componentDidMount() {
+        await this.setState({isLoaded: true})
     }
-
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         const { minCalories, maxCalories, minCarbs, maxCarbs, minProtein, maxProtein, minFat, maxFat } = this.state;
         event.preventDefault();
-        fetch(`https://api.spoonacular.com/recipes/findByNutrients?minCalories=${minCalories}&maxCalories=${maxCalories}&random=true&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result)
-                    this.setState({
-                        isLoaded: true,
-                        recipes: result
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
+        try {
+            const data = await fetch(
+                `https://api.spoonacular.com/recipes/findByNutrients?minCalories=${minCalories}&maxCalories=${maxCalories}&random=true&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`
             )
+            const result = await data.json();
+            this.setState({
+                isLoaded: true,
+                recipes: result
+            });
+        } catch (error) {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+        }
     }
-
 
     render() {
         const { error, isLoaded, recipes, minCalories, maxCalories, minCarbs, maxCarbs, minProtein, maxProtein, minFat, maxFat } = this.state;

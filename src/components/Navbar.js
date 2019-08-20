@@ -5,7 +5,7 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggleNavbar: true
+            toggleNavbar: false
         }
         this.handleClick = this.handleClick.bind(this);
         this.setWrapperRef = this.setWrapperRef.bind(this);
@@ -31,9 +31,8 @@ class Navbar extends Component {
      * Set state if clicked on outside of element
      */
     handleClickOutside(event) {
-        const toggleNavbar = this.state.toggleNavbar;
         if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-            this.setState({ toggleNavbar: !toggleNavbar })
+            this.setState({ toggleNavbar: false })
         }
     }
 
@@ -51,7 +50,7 @@ class Navbar extends Component {
                 <button onClick={this.handleClick} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                {!toggleNavbar ? (
+                {toggleNavbar ? (
                     <div className="navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
                             <Link className="nav-item nav-link" to="/recipes">Recipes <span className="sr-only">(current)</span></Link>

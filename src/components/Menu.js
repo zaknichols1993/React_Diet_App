@@ -55,6 +55,7 @@ class Menu extends Component {
             return (
                 <Fragment>
                     <form className="container mt-3" onSubmit={this.handleSubmit}>
+                        <p>Search over 115,000 menu items from over 800 fast food and chain restaurants. For example, McDonald's Big Mac or Starbucks Mocha.</p>
                         <div className="form-group">
                             <label>
                                 Search: <input className="m-1 form-control" type="text" name="query" value={query} onChange={this.handleChange} />
@@ -64,9 +65,9 @@ class Menu extends Component {
                     </form>
                     <ul className="container col-xs-12">
                         {menuItems.map(menuItem => (
-                            <li key={menuItem.id} className="menuItems-li">
+                            <li key={menuItem.id} className="recipe-li">
                                 <div className="media rounded">
-                                    <img className="height menuItems-img" alt="menuItem" src={menuItem.image} />
+                                    <img className="height recipe-img" alt="menuItem" src={menuItem.image} />
                                     <div className="media-body p-2">
                                         <h5>{menuItem.title}</h5>
                                         <div>Serving Size: {menuItem.servingSize}</div>

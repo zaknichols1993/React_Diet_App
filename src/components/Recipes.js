@@ -63,6 +63,7 @@ class Recipes extends Component {
             return (
                 <Fragment>
                     <form className="container mt-3" onSubmit={this.handleSubmit}>
+                        <p>Search for over 360,000 different recipes and filter your results by dietary requirements.</p>
                         <div className="form-group">
                             <label>
                                 Search: <input className="m-1 form-control" type="text" name="query" value={query} onChange={this.handleChange} />

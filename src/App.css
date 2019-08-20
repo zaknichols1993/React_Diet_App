@@ -19,3 +19,7 @@
 .recipe-li {
   list-style: none;
 }
+
+.navbar-nav {
+  transition: all 0.5s;
+}

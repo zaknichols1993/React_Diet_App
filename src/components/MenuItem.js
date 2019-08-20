@@ -21,7 +21,7 @@ class MenuItem extends Component {
                     this.setState({
                         isLoaded: true,
                         menuItem: result,
-                        image: result.images[0],
+                        image: result.images,
                         nutrition: result.nutrition
                     });
                 },
@@ -43,18 +43,18 @@ class MenuItem extends Component {
         const nutrition = this.state.nutrition
         return (
             <div className="container">
-                <div>{id}</div>
+                <div>id: {id}</div>
                 <h3>{title}</h3>
-                <img src={image} />
-                
-                {Object.entries(nutrition).map(([key, value], i) => {
-                    return (
-                        <div key={i}>
-                            <strong>{key.charAt(0).toUpperCase() + key.slice(1)}</strong>: {value}
-                        </div>
-                    )
-                })}
-                {/* <div>{nutrition.protein}</div> */}
+                <img className="col-md-6 offset-md-3 my-3" src={image[1]} />
+                <div className="row">
+                    {Object.entries(nutrition).map(([key, value], i) => {
+                        return (
+                            <div key={i} className="col text-center">
+                                <strong>{key.charAt(0).toUpperCase() + key.slice(1)}</strong>: {value}
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         )
     }

@@ -11,21 +11,43 @@ class Recipe extends Component {
             instructions: [],
             nutrition: []
         };
+
     }
     componentDidMount() {
         const { id } = this.props.match.params;
-        fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+        fetch(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=bb6a675616934bed81e967cc50497f10`)
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result)
+                    // console.log(result)
+                    // // if (array.length > 0 && arrayTwo.length > 0 && arrayThree.length > 0) {
+                    // //     // do something
+                    // // }
+                    // if (!instructions) {
+                    //     console.log(instructions)
+                    //     this.setState({
+                    //         recipe: result,
+                    //         ingredients: result.extendedIngredients,
+                    //         nutrition: result.nutrition.nutrients,
+                    //         instructions: [],
+                    //         isLoaded: true,
+                    //     });
+                    // } else {
                     this.setState({
-                        isLoaded: true,
                         recipe: result,
                         ingredients: result.extendedIngredients,
-                        instructions: result.analyzedInstructions[0].steps,
-                        nutrition: result.nutrition.nutrients
+                        nutrition: result.nutrition.nutrients,
+                        instructions: result.analyzedInstructions,
+                        isLoaded: true,
                     });
+                    // else {
+                    // this.setState({
+                    //     recipe: result,
+                    //     ingredients: result.extendedIngredients,
+                    //     instructions: result.analyzedInstructions[0].steps,
+                    //     nutrition: result.nutrition.nutrients,
+                    //     isLoaded: true,
+                    // });
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
@@ -38,6 +60,7 @@ class Recipe extends Component {
                 }
             )
     }
+
     render() {
         const { id } = this.props.match.params;
         const { title, image, readyInMinutes, servings, spoonacularScore } = this.state.recipe;
@@ -53,12 +76,12 @@ class Recipe extends Component {
         )
         return (
             <div className="container">
-                <div>ID: {id}</div>
+                <div>id: {id}</div>
                 <h3>{title}</h3>
-                <div className="col-md-6 offset-md-3">
+                <div className="col-md-6 offset-md-3 my-3">
                     <img src={image} className="img-fluid" />
                 </div>
-                <div className="row m-2">
+                <div className="row">
                     <div className="col text-center">
                         Ready In: {readyInMinutes} Minutes
                     </div>
@@ -69,25 +92,32 @@ class Recipe extends Component {
                         Score: {spoonacularScore}%
                     </div>
                 </div>
-                <ul className="col-md-6">
-                    <h5>Nutrition</h5>
-                    {nutrition.map(nutrient => (
-                        <li key={nutrient.title} className="recipe-li">{nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}</li>
-                    ))}
-                </ul>
                 <div className="row mt-2">
-                    <ul className="col-md-6">
+                    <ul className="col-xs-12 col-md-4">
+                        <h5>Nutrition Info</h5>
+                        {nutrition.map(nutrient => (
+                            <li key={nutrient.title} className="recipe-li">{nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}</li>
+                        ))}
+                    </ul>
+                    <ul className="col-xs-12 col-md-4">
                         <h5>Ingredients</h5>
                         {ingredients.map(ingredient => (
                             <li key={ingredient.id} className="recipe-li">{ingredient.original}</li>
                         ))}
                     </ul>
-                    <ul className="col-md-6">
-                        <h5>Instructions</h5>
-                        {instructions.map(instruction => (
-                            <li key={instruction.number} className="recipe-li">{instruction.number}: {instruction.step}</li>
-                        ))}
-                    </ul>
+                    {!instructions.length ? (
+                        <div className="col-xs-12 col-md-4">
+                            <h5>Instructions</h5>
+                            <div>Sorry! There are no instructions for this recipe.</div>
+                        </div>
+                    ) : (
+                            <ul className="col">
+                                <h5>Instructions</h5>
+                                {instructions[0].steps.map(instruction => (
+                                    <li key={instruction.number} className="recipe-li">{instruction.number}: {instruction.step}</li>
+                                ))}
+                            </ul>
+                        )}
                 </div>
             </div>
         )

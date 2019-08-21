@@ -7,6 +7,7 @@ class Recipes extends Component {
         this.state = {
             error: null,
             isLoaded: false,
+            loadingButton: false,
             recipes: [],
             query: '',
             cuisine: '',
@@ -16,14 +17,34 @@ class Recipes extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
-        this.setState({ isLoaded: true })
+        const isLoaded = this.state.isLoaded
+        this.setState({ isLoaded: !isLoaded })
     }
 
+    // handleClick() {
+    //     const loadingButton = this.state.loadingButton
+    //     setTimeout(() => {
+    //         this.setState({
+    //             loadingButton: !loadingButton
+    //         })
+    //     }, 2000);
+    // }
+    // //     this.timer = setTimeout(
+    // //         () => this.setState({ loadingButton: !loadingButton }), 1500
+    // //     )
+    // // }
 
-    handleChange(event) {
+    handleClick = () => {
+        setTimeout(() => {
+            this.setState({ loadingButton: false });
+        }, 1250);
+    };
+
+    handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
     }
 
@@ -37,7 +58,8 @@ class Recipes extends Component {
                     console.log(result)
                     this.setState({
                         isLoaded: true,
-                        recipes: result.results
+                        recipes: result.results,
+                        loadingButton: true
                     });
                 },
                 // Note: it's important to handle errors here
@@ -54,83 +76,101 @@ class Recipes extends Component {
 
 
     render() {
-        const { error, isLoaded, recipes, query, cuisine, diet, intolerance } = this.state;
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        } else if (!isLoaded) {
-            return <div>Loading...</div>;
-        } else {
-            return (
-                <Fragment>
-                    <form className="container mt-3" onSubmit={this.handleSubmit}>
-                        <p>Search for over 360,000 different recipes and filter your results by dietary requirements.</p>
-                        <div className="form-group">
-                            <label>
-                                Search: <input className="m-1 form-control" type="text" name="query" value={query} onChange={this.handleChange} />
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <label>
-                                Cuisine:
+        const {
+            error,
+            isLoaded,
+            loadingButton,
+            recipes,
+            query,
+            cuisine,
+            diet,
+            intolerance,
+        } = this.state;
+        if (!isLoaded) return (
+            <div className="text-center mt-3">
+                <div className="spinner-border-big" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        )
+        return (
+            <Fragment>
+                <form className="container mt-3" onSubmit={this.handleSubmit}>
+                    <p>Search for over 360,000 different recipes and filter your results by dietary requirements.</p>
+                    <div className="form-group">
+                        <label>
+                            Search: <input className="m-1 form-control" type="text" name="query" value={query} onChange={this.handleChange} />
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label>
+                            Cuisine:
                             <select className="m-1 form-control" value={cuisine} name="cuisine" onChange={this.handleChange} >
-                                    <option value="">Any</option>
-                                    <option value="American">American</option>
-                                    <option value="Chinese">Chinese</option>
-                                    <option value="Japanese">Japanese</option>
-                                    <option value="Italian">Italian</option>
-                                    <option value="Mexican">Mexican</option>
-                                    <option value="Thai">Thai</option>
-                                    <option value="French">French</option>
-                                    <option value="Southern">Southern</option>
+                                <option value="">Any</option>
+                                <option value="American">American</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Italian">Italian</option>
+                                <option value="Mexican">Mexican</option>
+                                <option value="Thai">Thai</option>
+                                <option value="French">French</option>
+                                <option value="Southern">Southern</option>
 
-                                </select>
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <label >
-                                Diet:
+                            </select>
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label >
+                            Diet:
                             <select className="m-1 form-control" value={diet} name="diet" onChange={this.handleChange} >
-                                    <option value="">Any</option>
-                                    <option value="Gluten Free">Gluten Free</option>
-                                    <option value="Ketogenic">Ketogenic</option>
-                                    <option value="Vegetarian">Vegetarian</option>
-                                    <option value="Vegan">Vegan</option>
-                                    <option value="Paleo">Paleo</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div className="form-group">
-                            <label >
-                                Intolerances:
+                                <option value="">Any</option>
+                                <option value="Gluten Free">Gluten Free</option>
+                                <option value="Ketogenic">Ketogenic</option>
+                                <option value="Vegetarian">Vegetarian</option>
+                                <option value="Vegan">Vegan</option>
+                                <option value="Paleo">Paleo</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label >
+                            Intolerances:
                             <select className="m-1 form-control" value={intolerance} name="intolerance" onChange={this.handleChange} >
-                                    <option value="">None</option>
-                                    <option value="Soy Free">Soy Free</option>
-                                    <option value="Peanut Free">Peanut Free</option>
-                                    <option value="Grain Free">Grain Free</option>
-                                    <option value="Dairy Free">Dairy Free</option>
-                                </select>
-                            </label>
-                        </div>
-                        <input type="submit" className="btn btn-primary" value="Submit" />
-                    </form>
-                    <ul className="container col-xs-12">
-                        {recipes.map(recipe => (
-                                <li key={recipe.id} className="recipes-li">
-                                    <div className="media rounded">
-                                        <img className="height recipes-img" alt="recipe" src={`https://spoonacular.com/recipeImages/${recipe.image}`} />
-                                        <div className="media-body p-2">
-                                            <h5>{recipe.title}</h5>
-                                            <div>Time to cook: {recipe.readyInMinutes} Minutes</div>
-                                            <div>Servings: {recipe.servings}</div>
-                                            <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary">View Details</Link>
-                                        </div>
-                                    </div>
-                                </li>
-                        ))}
-                    </ul>
-                </Fragment>
-            );
-        }
+                                <option value="">None</option>
+                                <option value="Soy Free">Soy Free</option>
+                                <option value="Peanut Free">Peanut Free</option>
+                                <option value="Grain Free">Grain Free</option>
+                                <option value="Dairy Free">Dairy Free</option>
+                            </select>
+                        </label>
+                    </div>
+                    {loadingButton ? (
+                        <button className="btn btn-primary" type="button" disabled>
+                            <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                    ) : (
+                            <input type="submit" className="btn btn-primary" onClick={this.handleClick} value="Submit" />
+                        )
+                    }
+                </form>
+                <ul className="container col-xs-12">
+                    {recipes.map(recipe => (
+                        <li key={recipe.id} className="recipes-li">
+                            <div className="media rounded">
+                                <img className="height recipes-img" alt="recipe" src={`https://spoonacular.com/recipeImages/${recipe.image}`} />
+                                <div className="media-body p-2">
+                                    <h5>{recipe.title}</h5>
+                                    <div>Time to cook: {recipe.readyInMinutes} Minutes</div>
+                                    <div>Servings: {recipe.servings}</div>
+                                    <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary">View Details</Link>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </Fragment>
+        );
     }
 }
 

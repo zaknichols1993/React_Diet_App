@@ -7,6 +7,7 @@ class RecipeNutrients extends Component {
         this.state = {
             error: null,
             isLoaded: false,
+            loadingButton: false,
             recipes: [],
             minCalories: '',
             maxCalories: '',
@@ -23,8 +24,14 @@ class RecipeNutrients extends Component {
     }
 
     async componentDidMount() {
-        await this.setState({isLoaded: true})
+        await this.setState({ isLoaded: true })
     }
+
+    handleClick = () => {
+        setTimeout(() => {
+            this.setState({ loadingButton: false });
+        }, 1250);
+    };
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -40,7 +47,9 @@ class RecipeNutrients extends Component {
             const result = await data.json();
             this.setState({
                 isLoaded: true,
-                recipes: result
+                recipes: result,
+                loadingButton: true
+                
             });
         } catch (error) {
             this.setState({
@@ -51,7 +60,7 @@ class RecipeNutrients extends Component {
     }
 
     render() {
-        const { error, isLoaded, recipes, minCalories, maxCalories, minCarbs, maxCarbs, minProtein, maxProtein, minFat, maxFat } = this.state;
+        const { error, isLoaded, loadingButton, recipes, minCalories, maxCalories, minCarbs, maxCarbs, minProtein, maxProtein, minFat, maxFat } = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -71,7 +80,15 @@ class RecipeNutrients extends Component {
                                 Maximum Calories: <input className="m-1 form-control" type="text" name="maxCalories" value={maxCalories} onChange={this.handleChange} />
                             </label>
                         </div>
-                        <input type="submit" className="btn btn-primary" value="Submit" />
+                        {loadingButton ? (
+                            <button className="btn btn-primary" type="button" disabled>
+                                <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+                                Loading...
+                        </button>
+                        ) : (
+                                <input type="submit" className="btn btn-primary" onClick={this.handleClick} value="Submit" />
+                            )
+                        }
                     </form>
                     <ul className="container col-xs-12">
                         {recipes.map(recipe => (

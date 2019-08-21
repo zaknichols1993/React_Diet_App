@@ -6,7 +6,7 @@ class Recipe extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            recipe: [],
+            recipe: []
             // ingredients: [],
             // instructions: [],
             // nutrition: []
@@ -36,7 +36,13 @@ class Recipe extends Component {
 
     render() {
         const { isLoaded } = this.state;
-        if (!isLoaded) return <div>Loading...</div>
+        if (!isLoaded) return (
+            <div className="text-center mt-3">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        )
         const { id } = this.props.match.params;
         const {
             title,
@@ -48,14 +54,16 @@ class Recipe extends Component {
             analyzedInstructions: instructions,
             nutrition: { nutrients }
         } = this.state.recipe;
-        const filtered = nutrients.filter(nutrient =>
-            nutrient.title === 'Calories' ||
-            nutrient.title === 'Protein' ||
-            nutrient.title === 'Carbohydrates' ||
-            nutrient.title === 'Fat' ||
-            nutrient.title === 'Sugar' ||
-            nutrient.title === 'Fiber'
-        )
+        // const filtered = nutrients.filter(nutrient =>
+        //     nutrient.title ==
+        //     'Calories' &&
+        //     'Protein' &&
+        //     'Carbohydrates' &&
+        //     'Fat' &&
+        //     'Sugar' &&
+        //     'Fiber'
+        // )
+        const filtered = nutrients.filter(({ title }) => ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Sugar', 'Fiber'].includes(title));
         return (
             <div className="container">
                 <div>id: {id}</div>

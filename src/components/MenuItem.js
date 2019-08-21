@@ -11,40 +11,40 @@ class MenuItem extends Component {
             nutrition: {}
         };
     }
-    componentDidMount() {
+    async componentDidMount() {
         const { id } = this.props.match.params;
-        fetch(`https://api.spoonacular.com/food/menuItems/${id}?apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result)
-                    this.setState({
-                        isLoaded: true,
-                        menuItem: result,
-                        image: result.images,
-                        nutrition: result.nutrition
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+        try {
+            const data = await fetch(`https://api.spoonacular.com/food/menuItems/${id}?apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+            const result = await data.json();
+            this.setState({
+                isLoaded: true,
+                menuItem: result,
+            });
+        } catch (error) {
+            this.setState({
+                isLoaded: true,
+                error
+            });
+        }
     }
     render() {
+        const { isLoaded } = this.state;
+        if (!isLoaded) return (
+            <div class="text-center mt-3">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        )
         const { id } = this.props.match.params;
-        const { title } = this.state.menuItem
-        const image = this.state.image
-        const nutrition = this.state.nutrition
+        const { title, restaurantChain, images: image, nutrition: nutrition } = this.state.menuItem
+        // const image = this.state.image
+        // const nutrition = this.state.nutrition
         return (
             <div className="container">
                 <div>id: {id}</div>
                 <h3>{title}</h3>
+                <h5>{restaurantChain}</h5>
                 <img className="col-md-6 offset-md-3 my-3" src={image[1]} alt={title} />
                 <div className="row">
                     {Object.entries(nutrition).map(([key, value], i) => {

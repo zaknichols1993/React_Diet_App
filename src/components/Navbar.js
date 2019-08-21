@@ -36,29 +36,32 @@ class Navbar extends Component {
         }
     }
 
-    handleClick(event) {
+    handleClick() {
         const toggleNavbar = this.state.toggleNavbar
-        event.preventDefault();
+        // event.preventDefault();
         this.setState({ toggleNavbar: !toggleNavbar });
     }
 
     render() {
-        const toggleNavbar = this.state.toggleNavbar
+        let toggleCollapseClass = 'navbar-collapse'
+        let toggleExpandNav = 'navbar navbar-light bg-light'
+        if (!this.state.toggleNavbar) {
+            toggleCollapseClass += ' ' + 'collapse'
+            toggleExpandNav += ' ' + 'navbar-expand-lg'
+        }
         return (
-            <nav ref={this.setWrapperRef} className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav ref={this.setWrapperRef} className={toggleExpandNav}>
                 <Link className="navbar-brand" to="/">Diet and Recipe API</Link>
                 <button onClick={this.handleClick} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                {toggleNavbar ? (
-                    <div className="navbar-collapse" id="navbarNavAltMarkup">
-                        <div className="navbar-nav">
-                            <Link className="nav-item nav-link" to="/recipes">Recipes <span className="sr-only">(current)</span></Link>
-                            <Link className="nav-item nav-link" to="/menu">Menu</Link>
-                            <Link className="nav-item nav-link" to="/recipe-nutrients">Search Macronutrients</Link>
-                        </div>
+                <div className={toggleCollapseClass} id="navbarNavAltMarkup">
+                    <div className="navbar-nav">
+                        <Link onClick={this.handleClick} className="nav-item nav-link" to="/recipes">Recipes <span className="sr-only">(current)</span></Link>
+                        <Link onClick={this.handleClick} className="nav-item nav-link" to="/menu">Menu</Link>
+                        <Link onClick={this.handleClick} className="nav-item nav-link" to="/recipe-nutrients">Search Macronutrients</Link>
                     </div>
-                ) : null}
+                </div>
             </nav>
         )
     }

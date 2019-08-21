@@ -23,3 +23,7 @@
 .navbar-nav {
   transition: all 0.5s;
 }
+
+.spinner-border-big {
+  width: 3rem; height: 3rem;
+}

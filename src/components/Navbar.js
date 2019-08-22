@@ -46,8 +46,8 @@ class Navbar extends Component {
         let toggleCollapseClass = 'navbar-collapse'
         let toggleExpandNav = 'navbar navbar-light bg-light'
         if (!this.state.toggleNavbar) {
-            toggleCollapseClass += ' ' + 'collapse'
-            toggleExpandNav += ' ' + 'navbar-expand-lg'
+            toggleCollapseClass += ` collapse`
+            toggleExpandNav += ` navbar-expand-lg`
         }
         return (
             <nav ref={this.setWrapperRef} className={toggleExpandNav}>

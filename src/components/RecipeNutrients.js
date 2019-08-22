@@ -16,7 +16,9 @@ class RecipeNutrients extends Component {
             minProtein: '',
             maxProtein: '',
             minFat: '',
-            maxFat: ''
+            maxFat: '',
+            fields: {},
+            errors: {}
         };
 
         this.handleChange = this.handleChange.bind(this);

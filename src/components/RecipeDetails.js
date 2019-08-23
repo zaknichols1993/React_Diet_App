@@ -51,7 +51,7 @@ class Recipe extends Component {
             analyzedInstructions: instructions,
             nutrition: { nutrients }
         } = this.state.recipe;
-        const filtered = nutrients.filter(({ title }) => ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Sugar', 'Fiber'].includes(title));
+        const filteredNutrients = nutrients.filter(({ title }) => ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Sugar', 'Fiber'].includes(title));
         return (
             <div className="container">
                 <div>id: {id}</div>
@@ -73,7 +73,7 @@ class Recipe extends Component {
                 <div className="row mt-2">
                     <ul className="col-xs-12 col-md-4">
                         <h5>Nutrition Info</h5>
-                        {filtered.map(nutrient => (
+                        {filteredNutrients.map(nutrient => (
                             <li key={nutrient.title} className="recipe-li">{nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}</li>
                         ))}
                     </ul>

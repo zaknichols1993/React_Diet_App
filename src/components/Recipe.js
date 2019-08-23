@@ -7,9 +7,6 @@ class Recipe extends Component {
             error: null,
             isLoaded: false,
             recipe: []
-            // ingredients: [],
-            // instructions: [],
-            // nutrition: []
         };
 
     }
@@ -54,15 +51,6 @@ class Recipe extends Component {
             analyzedInstructions: instructions,
             nutrition: { nutrients }
         } = this.state.recipe;
-        // const filtered = nutrients.filter(nutrient =>
-        //     nutrient.title ==
-        //     'Calories' &&
-        //     'Protein' &&
-        //     'Carbohydrates' &&
-        //     'Fat' &&
-        //     'Sugar' &&
-        //     'Fiber'
-        // )
         const filtered = nutrients.filter(({ title }) => ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Sugar', 'Fiber'].includes(title));
         return (
             <div className="container">

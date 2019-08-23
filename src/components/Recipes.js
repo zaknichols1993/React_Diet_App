@@ -16,31 +16,32 @@ class Recipes extends Component {
         loadingButton: false
     };
 
-    componentDidMount() {
+    componentDidMount = () => {
         const isLoaded = this.state.isLoaded
         this.setState({ isLoaded: !isLoaded })
     }
 
-    handleValidation() {
-        let fields = this.state.fields
-        let errors = {};
-        let formIsValid = true;
+    handleValidation = () => {
+        const fields = this.state.fields
+        const errors = {};
+        let formIsValid = false;
 
         //Query
-        if (!fields["query"]) {
-            formIsValid = false;
+        if (fields["query"]) {
+            formIsValid = true;
+        } else {
             errors["query"] = "Search cannot be empty";
         }
         this.setState({ errors: errors });
         return formIsValid;
     }
 
-    handleClick = () => {
-        const loadingButton = this.state.loadingButton
-        setTimeout(() => {
-            this.setState({ loadingButton: loadingButton });
-        }, 1500);
-    };
+    // handleClick = () => {
+    //     const loadingButton = this.state.loadingButton
+    //     setTimeout(() => {
+    //         this.setState({ loadingButton: loadingButton });
+    //     }, 5000);
+    // };
 
     handleChange = (field, event) => {
         console.log(field, event)
@@ -145,7 +146,7 @@ class Recipes extends Component {
                             </select>
                         </label>
                     </div>
-                    {loadingButton ? (
+                    {!isLoaded ? (
                         <button className="btn btn-primary" type="button" disabled>
                             <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
                             Loading...

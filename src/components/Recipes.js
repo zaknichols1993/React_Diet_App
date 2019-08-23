@@ -1,5 +1,7 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import EachRecipe from './EachRecipe'
 
 class Recipes extends Component {
     state = {
@@ -157,19 +159,7 @@ class Recipes extends Component {
                     }
                 </form>
                 <ul className="container col-xs-12">
-                    {recipes.map(recipe => (
-                        <li key={recipe.id} className="recipes-li">
-                            <div className="media rounded">
-                                <img className="height recipes-img" alt="recipe" src={`https://spoonacular.com/recipeImages/${recipe.image}`} />
-                                <div className="media-body p-2">
-                                    <h5>{recipe.title}</h5>
-                                    <div>Time to cook: {recipe.readyInMinutes} Minutes</div>
-                                    <div>Servings: {recipe.servings}</div>
-                                    <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary">View Details</Link>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
+                    <EachRecipe recipes={recipes} />
                 </ul>
             </Fragment>
         );

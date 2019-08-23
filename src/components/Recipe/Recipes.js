@@ -38,12 +38,12 @@ class Recipes extends Component {
         return formIsValid;
     }
 
-    // handleClick = () => {
-    //     const loadingButton = this.state.loadingButton
-    //     setTimeout(() => {
-    //         this.setState({ loadingButton: loadingButton });
-    //     }, 5000);
-    // };
+    handleClick = () => {
+        const loadingButton = this.state.loadingButton
+        setTimeout(() => {
+            this.setState({ loadingButton: loadingButton });
+        }, 1500);
+    };
 
     handleChange = (field, event) => {
         console.log(field, event)
@@ -117,7 +117,6 @@ class Recipes extends Component {
                                 <option value="Thai">Thai</option>
                                 <option value="French">French</option>
                                 <option value="Southern">Southern</option>
-
                             </select>
                         </label>
                         <br />
@@ -148,7 +147,7 @@ class Recipes extends Component {
                             </select>
                         </label>
                     </div>
-                    {!isLoaded ? (
+                    {loadingButton ? (
                         <button className="btn btn-primary" type="button" disabled>
                             <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
                             Loading...

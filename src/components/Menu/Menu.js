@@ -35,7 +35,6 @@ class Menu extends Component {
         }
     }
 
-
     render() {
         const { error, isLoaded, menuItems, query } = this.state;
         if (error) {

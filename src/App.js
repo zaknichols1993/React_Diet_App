@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 import './App.css';
 
-import Recipes from './components/Recipes';
-import RecipeDetails from './components/RecipeDetails';
-import Menu from './components/Menu';
-import MenuItemDetails from './components/MenuItemDetails';
+import Recipes from './components/Recipe/Recipes';
+import RecipeDetails from './components/Recipe/RecipeDetails/Details';
+import Menu from './components/Menu/Menu';
+import MenuItemDetails from './components/Menu/MenuItemDetails';
 import RecipeNutrients from './components/RecipeNutrients';
 import Navbar from './components/Navbar';
 import Home from './components/Home';

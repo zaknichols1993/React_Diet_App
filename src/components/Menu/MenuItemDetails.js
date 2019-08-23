@@ -6,9 +6,7 @@ class MenuItem extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            menuItem: {},
-            image: [],
-            nutrition: {}
+            menuItem: {}
         };
     }
     async componentDidMount() {
@@ -30,14 +28,19 @@ class MenuItem extends Component {
     render() {
         const { isLoaded } = this.state;
         if (!isLoaded) return (
-            <div class="text-center mt-3">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+            <div className="text-center mt-3">
+                <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                 </div>
             </div>
         )
         const { id } = this.props.match.params;
-        const { title, restaurantChain, images: image, nutrition: nutrition } = this.state.menuItem
+        const {
+            title,
+            restaurantChain,
+            images: image,
+            nutrition: nutrition
+        } = this.state.menuItem
         // const image = this.state.image
         // const nutrition = this.state.nutrition
         return (

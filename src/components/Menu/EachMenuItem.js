@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 function EachMenuItem(props) {
     const menuItems = props.menuItems
     const eachMenuItem = menuItems.map(menuItem => {
-        return <li key={menuItem.id} className="recipe-li">
+        return <li key={menuItem.id} className="recipes-li">
             <div className="media rounded">
-                <img className="height recipe-img" alt="menuItem" src={menuItem.image} />
+                <img className="height recipes-img" alt="menuItem" src={menuItem.image} />
                 <div className="media-body p-2">
                     <h5>{menuItem.title}</h5>
                     <div>Serving Size: {menuItem.servingSize}</div>

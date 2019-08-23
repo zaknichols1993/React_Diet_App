@@ -2,31 +2,25 @@ import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom'
 
 class RecipeNutrients extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            loadingButton: false,
-            recipes: [],
-            minCalories: '',
-            maxCalories: '',
-            minCarbs: '',
-            maxCarbs: '',
-            minProtein: '',
-            maxProtein: '',
-            minFat: '',
-            maxFat: '',
-            fields: {},
-            errors: {}
-        };
+    state = {
+        error: null,
+        isLoaded: false,
+        loadingButton: false,
+        recipes: [],
+        minCalories: '',
+        maxCalories: '',
+        minCarbs: '',
+        maxCarbs: '',
+        minProtein: '',
+        maxProtein: '',
+        minFat: '',
+        maxFat: '',
+        fields: {},
+        errors: {}
+    };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    async componentDidMount() {
-        await this.setState({ isLoaded: true })
+    componentDidMount = () => {
+        this.setState({ isLoaded: true })
     }
 
     handleClick = () => {
@@ -35,7 +29,7 @@ class RecipeNutrients extends Component {
         }, 1250);
     };
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
     }
 
@@ -51,7 +45,7 @@ class RecipeNutrients extends Component {
                 isLoaded: true,
                 recipes: result,
                 loadingButton: true
-                
+
             });
         } catch (error) {
             this.setState({

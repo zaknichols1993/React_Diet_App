@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 
+import Ingredients from './Ingredients'
+import Instructions from './Instructions'
+import Nutrition from './Nutrition'
+
 class Recipe extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            recipe: []
-        };
 
-    }
+    state = {
+        error: null,
+        isLoaded: false,
+        recipe: []
+    };
 
-    async componentDidMount() {
+    componentDidMount = async () => {
         const { id } = this.props.match.params;
         try {
             const data = await fetch(
@@ -51,7 +52,6 @@ class Recipe extends Component {
             analyzedInstructions: instructions,
             nutrition: { nutrients }
         } = this.state.recipe;
-        const filteredNutrients = nutrients.filter(({ title }) => ['Calories', 'Protein', 'Carbohydrates', 'Fat', 'Sugar', 'Fiber'].includes(title));
         return (
             <div className="container">
                 <div>id: {id}</div>
@@ -73,29 +73,16 @@ class Recipe extends Component {
                 <div className="row mt-2">
                     <ul className="col-xs-12 col-md-4">
                         <h5>Nutrition Info</h5>
-                        {filteredNutrients.map(nutrient => (
-                            <li key={nutrient.title} className="recipe-li">{nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}</li>
-                        ))}
+                        <Nutrition nutrition={{ nutrients }} />
                     </ul>
                     <ul className="col-xs-12 col-md-4">
                         <h5>Ingredients</h5>
-                        {ingredients.map(ingredient => (
-                            <li key={ingredient.id} className="recipe-li">{ingredient.original}</li>
-                        ))}
+                        <Ingredients ingredients={ingredients} />
                     </ul>
-                    {!instructions.length ? (
-                        <div className="col-xs-12 col-md-4">
-                            <h5>Instructions</h5>
-                            <div>Sorry! There are no instructions for this recipe.</div>
-                        </div>
-                    ) : (
-                            <ul className="col">
-                                <h5>Instructions</h5>
-                                {instructions[0].steps.map(instruction => (
-                                    <li key={instruction.number} className="recipe-li">{instruction.number}: {instruction.step}</li>
-                                ))}
-                            </ul>
-                        )}
+                    <ul className="col-xs-12 col-md-4">
+                        <h5>Instructions</h5>
+                        <Instructions instructions={instructions} />
+                    </ul>
                 </div>
             </div>
         )

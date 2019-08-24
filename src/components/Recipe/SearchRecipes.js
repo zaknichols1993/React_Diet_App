@@ -21,28 +21,32 @@ class SearchRecipes extends Component {
         const errors = {};
         let formIsValid = false;
 
-        if (fields["query"]) {
+        if (fields.query) {
             formIsValid = true;
         } else {
-            errors["query"] = "Search cannot be empty";
+            errors.query = "Search cannot be empty";
         }
         this.setState({ errors: errors });
         return formIsValid;
     }
 
-    handleChange = (field, event) => {
-        console.log(field, event)
-        const fields = this.state.fields;
-        fields[field] = event.target.value;
-        this.setState({ fields });
-    }
+    handleChange = field => event => {
+        const value = event.currentTarget.value;
+        console.log(field, value);
+        this.setState(prevState => ({
+            fields: {
+                ...prevState.fields,
+                [field]: value
+            }
+        }));
+    };
 
     handleSubmit = async (event) => {
         const fields = this.state.fields
         event.preventDefault();
         if (this.handleValidation()) {
             try {
-                const data = await fetch(`https://api.spoonacular.com/recipes/search?query=${fields["query"]}&cuisine=${fields["cuisine"]}&diet=${fields["diet"]}&intolerances=${fields["intolerance"]}&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+                const data = await fetch(`https://api.spoonacular.com/recipes/search?query=${fields.query}&cuisine=${fields.cuisine}&diet=${fields.diet}&intolerances=${fields.intolerance}&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
                 const result = await data.json()
                 console.log(result)
                 this.setState({
@@ -74,15 +78,15 @@ class SearchRecipes extends Component {
                     <p>Search for over 360,000 different recipes and filter your results by dietary requirements.</p>
                     <div className="form-group">
                         <label>
-                            Search: <input className="m-1 form-control" type="text" name="query" value={fields['query']} onChange={(event) => this.handleChange("query", event)} />
+                            Search: <input className="m-1 form-control" type="text" name="query" value={fields.query} onChange={this.handleChange("query")} />
                         </label>
                         <br />
-                        <div className='text-danger'>{errors["query"]}</div>
+                        <div className='text-danger'>{errors.query}</div>
                     </div>
                     <div className="form-group">
                         <label>
                             Cuisine:
-                            <select className="m-1 form-control" value={fields["cuisine"]} name="cuisine" onChange={(event) => this.handleChange("cuisine", event)} >
+                            <select className="m-1 form-control" value={fields.cuisine} name="cuisine" onChange={this.handleChange("cuisine")} >
                                 <option value="">Any</option>
                                 <option value="American">American</option>
                                 <option value="Chinese">Chinese</option>
@@ -95,12 +99,12 @@ class SearchRecipes extends Component {
                             </select>
                         </label>
                         <br />
-                        <div className='text-danger'>{errors["cuisine"]}</div>
+                        <div className='text-danger'>{errors.cuisine}</div>
                     </div>
                     <div className="form-group">
                         <label >
                             Diet:
-                            <select className="m-1 form-control" value={fields["diet"]} name="diet" onChange={(event) => this.handleChange("diet", event)} >
+                            <select className="m-1 form-control" value={fields.diet} name="diet" onChange={this.handleChange("diet")} >
                                 <option value="">Any</option>
                                 <option value="Gluten Free">Gluten Free</option>
                                 <option value="Ketogenic">Ketogenic</option>
@@ -113,7 +117,7 @@ class SearchRecipes extends Component {
                     <div className="form-group">
                         <label >
                             Intolerances:
-                            <select className="m-1 form-control" value={fields["intolerance"]} name="intolerance" onChange={(event) => this.handleChange("intolerance", event)} >
+                            <select className="m-1 form-control" value={fields.intolerance} name="intolerance" onChange={this.handleChange("intolerance")} >
                                 <option value="">None</option>
                                 <option value="Soy Free">Soy Free</option>
                                 <option value="Peanut Free">Peanut Free</option>
@@ -129,9 +133,11 @@ class SearchRecipes extends Component {
                         value="Submit"
                     />
                 </form>
-                <ul className="container col-xs-12">
-                    <EachRecipe recipes={recipes} />
-                </ul>
+                <div className="container">
+                    <div className="row">
+                        <EachRecipe recipes={recipes} />
+                    </div>
+                </div>
             </Fragment>
         );
     }

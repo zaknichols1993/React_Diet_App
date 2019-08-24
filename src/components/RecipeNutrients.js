@@ -41,7 +41,6 @@ class RecipeNutrients extends Component {
         return formIsValid
     }
 
-    // Your code @Spex :D
     handleChange = field => event => {
         const value = event.currentTarget.value;
         console.log(field, value);
@@ -59,9 +58,10 @@ class RecipeNutrients extends Component {
         if (this.handleValidation()) {
             try {
                 const data = await fetch(
-                    `https://api.spoonacular.com/recipes/findByNutrients?minCalories=${fields.minCalories}&maxCalories=${fields["maxCalories"]}&random=true&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`
+                    `https://api.spoonacular.com/recipes/findByNutrients?minCalories=${fields.minCalories}&maxCalories=${fields.maxCalories}&random=true&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`
                 )
                 const result = await data.json();
+                console.log(result)
                 this.setState({
                     recipes: result,
                 });
@@ -122,21 +122,23 @@ class RecipeNutrients extends Component {
                         value="Submit"
                     />
                 </form>
-                <ul className="container col-xs-12">
-                    {recipes.map(recipe => (
-                        <li key={recipe.id} className="recipes-li">
-                            <div className="media rounded">
-                                <img className="height recipes-img" alt="recipe" src={recipe.image} />
-                                <div className="media-body p-2">
-                                    <h5>{recipe.title}</h5>
-                                    <div>Time to cook: {recipe.readyInMinutes} Minutes</div>
-                                    <div>Servings: {recipe.servings}</div>
-                                    <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary">View Details</Link>
+                <div className="container">
+                    <div className="row m-">
+                        {recipes.map(recipe => (
+                            <div key={recipe.id} className="col-xs-12 col-md-4 mb-3">
+                                <div className="card card-stuff">
+                                    <img className="img-fluid" alt="recipe" src={recipe.image} />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{recipe.title}</h5>
+                                        <div>Calories: {recipe.calories}</div>
+                                        <div>Protein: {recipe.protein}</div>
+                                        <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary m-2">View Details</Link>
+                                    </div>
                                 </div>
                             </div>
-                        </li>
-                    ))}
-                </ul>
+                        ))}
+                    </div>
+                </div>
             </Fragment>
         );
     }

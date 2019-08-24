@@ -22,7 +22,7 @@ class Menu extends Component {
         let formIsValid = true;
 
         if (!search) {
-            errors[search] = "Fill out this field."
+            errors.search = "Fill out this field."
             formIsValid = false;
         }
 
@@ -37,7 +37,7 @@ class Menu extends Component {
         event.preventDefault();
         if (this.handleValidation()) {
             try {
-                const data = await fetch(`https://api.spoonacular.com/food/menuItems/search?query=${search}&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+                const data = await fetch(`https://api.spoonacular.com/food/menuItems/search?query=${search}&number=30&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
                 const result = await data.json()
                 console.log(result)
                 this.setState({
@@ -65,7 +65,7 @@ class Menu extends Component {
                             Search: <input className="m-1 form-control" type="text" name="search" value={search} onChange={this.handleChange} />
                         </label>
                         <br />
-                        <div className='text-danger'>{errors[search]}</div>
+                        <div className='text-danger'>{errors.search}</div>
                     </div>
                     <input
                         type="submit"
@@ -74,8 +74,10 @@ class Menu extends Component {
                         value="Submit"
                     />
                 </form>
-                <ul className="container col-xs-12">
-                    <EachMenuItem menuItems={menuItems} />
+                <ul className="container">
+                    <div className="row">
+                        <EachMenuItem menuItems={menuItems} />
+                    </div>
                 </ul>
             </Fragment>
         );

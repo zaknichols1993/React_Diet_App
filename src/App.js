@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 import './App.css';
 
-import Recipes from './components/Recipe/Recipes';
+import SearchRecipes from './components/Recipe/SearchRecipes';
 import RecipeDetails from './components/Recipe/RecipeDetails/Details';
 import Menu from './components/Menu/Menu';
 import MenuItemDetails from './components/Menu/MenuItemDetails';
@@ -18,7 +18,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/recipes" component={Recipes} />
+          <Route exact path="/recipes" component={SearchRecipes} />
           <Route exact path="/recipes/:id/information" component={RecipeDetails} />
           <Route exact path="/menu" component={Menu} />
           <Route exact path="/food/menuItems/:id" component={MenuItemDetails} />

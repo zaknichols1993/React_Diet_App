@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 class RecipeNutrients extends Component {
     state = {
         error: null,
-        isLoaded: false,
-        loadingButton: false,
         recipes: [],
         fields: {
             minCalories: '',
@@ -20,25 +18,20 @@ class RecipeNutrients extends Component {
         errors: {}
     };
 
-    componentDidMount = () => {
-        const isLoaded = this.state.isLoaded
-        this.setState({ isLoaded: !isLoaded })
-    }
-
     handleValidation = () => {
-        const fields = {...this.state.fields}
+        const fields = this.state.fields
         const errors = {};
         let formIsValid = true;
 
-        if (!fields["minCalories"]) {
-            errors["minCalories"] = "Fill out this field."
+        if (!fields.minCalories) {
+            errors.minCalories = "Fill out this field."
             formIsValid = false;
         }
-        if (!fields["maxCalories"]) {
+        if (!fields.maxCalories) {
             formIsValid = false;
-            errors["maxCalories"] = "Fill out this field."
-        } else if (fields["minCalories"] >= fields["maxCalories"]) {
-            errors["minCalories"] = "Min calories can't be higher or equal to max calories."
+            errors.maxCalories = "Fill out this field."
+        } else if (fields.minCalories >= fields.maxCalories) {
+            errors.minCalories = "Min calories can't be higher or equal to max calories."
             formIsValid = false;
         }
 
@@ -48,25 +41,16 @@ class RecipeNutrients extends Component {
         return formIsValid
     }
 
-    handleChange = (field, event) => {
-        console.log(field, event)
-        const fields = {...this.state.fields}
-        fields[field] = parseInt(event.target.value)
-        this.setState({ fields: fields });
-    }
-
-    // handleChange = (field, event) => {
-    //     console.log(field, event)
-    //     this.setState({
-
-    //     })
-    // }
-
-    handleClick = () => {
-        const loadingButton = this.state.loadingButton
-        setTimeout(() => {
-            this.setState({ loadingButton: loadingButton });
-        }, 1500);
+    // Your code @Spex :D
+    handleChange = field => event => {
+        const value = event.currentTarget.value;
+        console.log(field, value);
+        this.setState(prevState => ({
+            fields: {
+                ...prevState.fields,
+                [field]: parseInt(value, 10)
+            }
+        }));
     };
 
     handleSubmit = async (event) => {
@@ -75,14 +59,11 @@ class RecipeNutrients extends Component {
         if (this.handleValidation()) {
             try {
                 const data = await fetch(
-                    `https://api.spoonacular.com/recipes/findByNutrients?minCalories=${fields["minCalories"]}&maxCalories=${fields["maxCalories"]}&random=true&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`
+                    `https://api.spoonacular.com/recipes/findByNutrients?minCalories=${fields.minCalories}&maxCalories=${fields["maxCalories"]}&random=true&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`
                 )
                 const result = await data.json();
                 this.setState({
-                    isLoaded: true,
                     recipes: result,
-                    loadingButton: true
-
                 });
             } catch (error) {
                 this.setState({
@@ -94,23 +75,13 @@ class RecipeNutrients extends Component {
             console.log("Form is invalid")
         }
     }
+
     render() {
         const {
             errors,
-            isLoaded,
-            loadingButton,
             recipes,
             fields
         } = this.state;
-
-
-        if (!isLoaded) return (
-            <div className="text-center mt-3">
-                <div className="spinner-border-big" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        )
 
         return (
             <Fragment>
@@ -123,12 +94,12 @@ class RecipeNutrients extends Component {
                                 className="m-1 form-control"
                                 type="number"
                                 name="minCalories"
-                                value={fields["minCalories"]}
-                                onChange={(event) => this.handleChange("minCalories", event)}
+                                value={fields.minCalories}
+                                onChange={this.handleChange("minCalories")}
                             />
                         </label>
                         <br />
-                        <div className='text-danger'>{errors["minCalories"]}</div>
+                        <div className='text-danger'>{errors.minCalories}</div>
                     </div>
                     <div className="form-group">
                         <label>
@@ -137,27 +108,19 @@ class RecipeNutrients extends Component {
                                 className="m-1 form-control"
                                 type="number"
                                 name="maxCalories"
-                                value={fields["maxCalories"]}
-                                onChange={(event) => this.handleChange("maxCalories", event)}
+                                value={fields.maxCalories}
+                                onChange={this.handleChange("maxCalories")}
                             />
                         </label>
                         <br />
-                        <div className='text-danger'>{errors["maxCalories"]}</div>
+                        <div className='text-danger'>{errors.maxCalories}</div>
                     </div>
-                    {loadingButton ? (
-                        <button className="btn btn-primary" type="button" disabled>
-                            <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                    ) : (
-                            <input
-                                type="submit"
-                                className="btn btn-primary"
-                                onClick={this.handleClick}
-                                value="Submit"
-                            />
-                        )
-                    }
+                    <input
+                        type="submit"
+                        className="btn btn-primary"
+                        onClick={this.handleClick}
+                        value="Submit"
+                    />
                 </form>
                 <ul className="container col-xs-12">
                     {recipes.map(recipe => (

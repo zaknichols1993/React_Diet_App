@@ -9,7 +9,7 @@ function Navbar() {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="navbar-collapse collapse" id="navbarNavAltMarkup">
-                <div className="navbar-nav">
+                <div className="navbar-nav mr-auto">
                     <Link className="nav-item nav-link" to="/recipes">Recipes <span className="sr-only">(current)</span></Link>
                     <Link className="nav-item nav-link" to="/menu">Menu</Link>
                     <Link className="nav-item nav-link" to="/recipe-nutrients">Search Macronutrients</Link>

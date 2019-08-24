@@ -1,9 +1,8 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import EachRecipe from './EachRecipe'
 
-class Recipes extends Component {
+class SearchRecipes extends Component {
     state = {
         errors: {},
         fields: {
@@ -15,20 +14,13 @@ class Recipes extends Component {
         recipes: [],
         error: null,
         isLoaded: false,
-        loadingButton: false
     };
-
-    componentDidMount = () => {
-        const isLoaded = this.state.isLoaded
-        this.setState({ isLoaded: !isLoaded })
-    }
 
     handleValidation = () => {
         const fields = this.state.fields
         const errors = {};
         let formIsValid = false;
 
-        //Query
         if (fields["query"]) {
             formIsValid = true;
         } else {
@@ -38,22 +30,15 @@ class Recipes extends Component {
         return formIsValid;
     }
 
-    handleClick = () => {
-        const loadingButton = this.state.loadingButton
-        setTimeout(() => {
-            this.setState({ loadingButton: loadingButton });
-        }, 1500);
-    };
-
     handleChange = (field, event) => {
         console.log(field, event)
-        let fields = this.state.fields;
+        const fields = this.state.fields;
         fields[field] = event.target.value;
         this.setState({ fields });
     }
 
     handleSubmit = async (event) => {
-        let fields = this.state.fields
+        const fields = this.state.fields
         event.preventDefault();
         if (this.handleValidation()) {
             try {
@@ -63,7 +48,6 @@ class Recipes extends Component {
                 this.setState({
                     isLoaded: true,
                     recipes: result.results,
-                    loadingButton: true,
                 });
             } catch (error) {
                 this.setState({
@@ -79,19 +63,10 @@ class Recipes extends Component {
     render() {
         const {
             isLoaded,
-            loadingButton,
             recipes,
             fields,
             errors
         } = this.state;
-
-        if (!isLoaded) return (
-            <div className="text-center mt-3">
-                <div className="spinner-border-big" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        )
 
         return (
             <Fragment>
@@ -147,15 +122,12 @@ class Recipes extends Component {
                             </select>
                         </label>
                     </div>
-                    {loadingButton ? (
-                        <button className="btn btn-primary" type="button" disabled>
-                            <span className="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                    ) : (
-                            <input type="submit" className="btn btn-primary" onClick={this.handleClick} value="Submit" />
-                        )
-                    }
+                    <input
+                        type="submit"
+                        className="btn btn-primary"
+                        onClick={this.handleClick}
+                        value="Submit"
+                    />
                 </form>
                 <ul className="container col-xs-12">
                     <EachRecipe recipes={recipes} />
@@ -165,4 +137,4 @@ class Recipes extends Component {
     }
 }
 
-export default Recipes;
+export default SearchRecipes;

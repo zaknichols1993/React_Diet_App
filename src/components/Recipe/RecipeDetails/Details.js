@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
+import RecipeData from './RecipeData'
 import Ingredients from './Ingredients'
 import Instructions from './Instructions'
 import Nutrition from './Nutrition'
-import RecipeData from './RecipeData'
 
 class Recipe extends Component {
 
@@ -55,7 +55,7 @@ class Recipe extends Component {
         } = this.state.recipe;
         return (
             <div className="container">
-                <RecipeData data={{id, title, image, readyInMinutes, servings, spoonacularScore}} />
+                <RecipeData data={{ id, title, image, readyInMinutes, servings, spoonacularScore }} />
                 <div className="row mt-2">
                     <ul className="col-xs-12 col-md-4">
                         <h5>Nutrition Info</h5>

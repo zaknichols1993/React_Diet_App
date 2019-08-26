@@ -11,7 +11,7 @@ import RecipeNutrients from './components/RecipeNutrients';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Fragment>

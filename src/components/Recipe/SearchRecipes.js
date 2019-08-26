@@ -46,7 +46,7 @@ class SearchRecipes extends Component {
         event.preventDefault();
         if (this.handleValidation()) {
             try {
-                const data = await fetch(`https://api.spoonacular.com/recipes/search?query=${fields.query}&cuisine=${fields.cuisine}&diet=${fields.diet}&intolerances=${fields.intolerance}&number=3&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
+                const data = await fetch(`https://api.spoonacular.com/recipes/search?query=${fields.query}&cuisine=${fields.cuisine}&diet=${fields.diet}&intolerances=${fields.intolerance}&number=6&apiKey=aa3d290f817b4356a170f6ffde9ecfea`)
                 const result = await data.json()
                 console.log(result)
                 this.setState({
@@ -74,11 +74,11 @@ class SearchRecipes extends Component {
 
         return (
             <Fragment>
-                <form className="container mt-3" onSubmit={this.handleSubmit}>
+                <form className="container mt-2" onSubmit={this.handleSubmit}>
                     <p>Search for over 360,000 different recipes and filter your results by dietary requirements.</p>
                     <div className="form-group">
                         <label>
-                            Search: <input className="m-1 form-control" type="text" name="query" value={fields.query} onChange={this.handleChange("query")} />
+                            Search: <input className="form-control" type="text" name="query" value={fields.query} onChange={this.handleChange("query")} />
                         </label>
                         <br />
                         <div className='text-danger'>{errors.query}</div>
@@ -86,7 +86,7 @@ class SearchRecipes extends Component {
                     <div className="form-group">
                         <label>
                             Cuisine:
-                            <select className="m-1 form-control" value={fields.cuisine} name="cuisine" onChange={this.handleChange("cuisine")} >
+                            <select className="form-control" value={fields.cuisine} name="cuisine" onChange={this.handleChange("cuisine")} >
                                 <option value="">Any</option>
                                 <option value="American">American</option>
                                 <option value="Chinese">Chinese</option>
@@ -104,7 +104,7 @@ class SearchRecipes extends Component {
                     <div className="form-group">
                         <label >
                             Diet:
-                            <select className="m-1 form-control" value={fields.diet} name="diet" onChange={this.handleChange("diet")} >
+                            <select className="form-control" value={fields.diet} name="diet" onChange={this.handleChange("diet")} >
                                 <option value="">Any</option>
                                 <option value="Gluten Free">Gluten Free</option>
                                 <option value="Ketogenic">Ketogenic</option>
@@ -117,7 +117,7 @@ class SearchRecipes extends Component {
                     <div className="form-group">
                         <label >
                             Intolerances:
-                            <select className="m-1 form-control" value={fields.intolerance} name="intolerance" onChange={this.handleChange("intolerance")} >
+                            <select className="form-control" value={fields.intolerance} name="intolerance" onChange={this.handleChange("intolerance")} >
                                 <option value="">None</option>
                                 <option value="Soy Free">Soy Free</option>
                                 <option value="Peanut Free">Peanut Free</option>

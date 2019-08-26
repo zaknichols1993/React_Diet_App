@@ -6,6 +6,32 @@ li {
   list-style: none;
 }
 
-.img-fluid {
-  max-height: 200px;
+.img {
+    min-width: 100%;
+    min-height: 250px; /* You can set the dimensions to whatever you want */
+    max-height: 250px;
+    object-fit: cover;
+}
+
+.img {
+  min-width: 100%;
+  min-height: 100px; /* You can set the dimensions to whatever you want */
+  max-height: 100px;
+  object-fit: cover;
+}
+
+.footer-widget {
+  height: 100%;
+}
+
+.info-button {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 5px;
+}
+
+.col-eq{
+    padding-bottom: 40px;
 }

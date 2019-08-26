@@ -80,7 +80,8 @@ class RecipeNutrients extends Component {
         const {
             errors,
             recipes,
-            fields
+            fields,
+            isLoaded
         } = this.state;
 
         return (
@@ -123,11 +124,11 @@ class RecipeNutrients extends Component {
                     />
                 </form>
                 <div className="container">
-                    <div className="row m-">
+                    <div className="row m-2">
                         {recipes.map(recipe => (
                             <div key={recipe.id} className="col-xs-12 col-md-4 mb-3">
-                                <div className="card card-stuff">
-                                    <img className="img-fluid" alt="recipe" src={recipe.image} />
+                                <div className="card card-stuff mt-3">
+                                    <img className="img-fluid img" alt="recipe" src={recipe.image} />
                                     <div className="card-body">
                                         <h5 className="card-title">{recipe.title}</h5>
                                         <div>Calories: {recipe.calories}</div>

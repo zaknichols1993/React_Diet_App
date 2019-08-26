@@ -4,7 +4,7 @@ function RecipeIngredients(props) {
     const ingredients = props.ingredients
     const eachIngredient = ingredients.map(ingredient => {
         return (
-            <li key={ingredient.id} className="recipe-li">{ingredient.original}</li>
+            <li key={ingredient.id}>{ingredient.original}</li>
         )
     })
     return (

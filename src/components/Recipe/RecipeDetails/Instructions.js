@@ -6,7 +6,7 @@ function RecipeInstructions(props) {
     if (instructions.length) {
         eachInstruction = instructions[0].steps.map(instruction => {
             return (
-                <li key={instruction.number} className="recipe-li">{instruction.number}: {instruction.step}</li>
+                <li key={instruction.number}>{instruction.number}: {instruction.step}</li>
             )
         })
     } else {

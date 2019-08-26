@@ -1,5 +1,4 @@
 import React, { Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import EachMenuItem from './EachMenuItem'
 
@@ -8,8 +7,7 @@ class Menu extends Component {
         error: null,
         menuItems: [],
         search: '',
-        errors: {},
-        loadingButton: false
+        errors: {}
     };
 
     handleChange = (event) => {

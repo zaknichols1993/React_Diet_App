@@ -55,7 +55,22 @@ class Recipe extends Component {
         } = this.state.recipe;
         return (
             <div className="container">
-                <RecipeData data={{ id, title, image, readyInMinutes, servings, spoonacularScore }} />
+                <div>id: {id}</div>
+                <h3>{title}</h3>
+                <div className="col-xs-12 col-md-6 offset-md-3 my-3">
+                    <img src={image} className="img-fluid" />
+                </div>
+                <div className="row">
+                    <div className="col text-center">
+                        Ready In: {readyInMinutes} Minutes
+                    </div>
+                    <div className="col text-center">
+                        Servings: {servings}
+                    </div>
+                    <div className="col text-center">
+                        Score: {spoonacularScore}%
+                    </div>
+                </div>
                 <div className="row mt-2">
                     <ul className="col-xs-12 col-md-4">
                         <h5>Nutrition Info</h5>

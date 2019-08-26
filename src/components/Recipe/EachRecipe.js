@@ -6,8 +6,8 @@ function EachRecipe(props) {
     const eachRecipe = recipes.map(recipe => {
         return (
             <div key={recipe.id} className="col-xs-12 col-md-4">
-                <div className="card card-stuff">
-                    <img className="img-fluid" alt="recipe" src={`https://spoonacular.com/recipeImages/${recipe.image}`} />
+                <div className="card card-stuff mt-3">
+                    <img className="img-fluid img" alt="recipe" src={`https://spoonacular.com/recipeImages/${recipe.image}`} />
                     <div className="card-body">
                         <h5 className="card-title">{recipe.title}</h5>
                         <div>Time to cook: {recipe.readyInMinutes} Minutes</div>
@@ -18,7 +18,6 @@ function EachRecipe(props) {
             </div>
         )
     });
-
     return (
         <Fragment>{eachRecipe}</Fragment>
     )

@@ -13,7 +13,7 @@ function RecipeNutrition(props) {
     ].includes(title));
     const eachNutrient = filteredNutrients.map(nutrient => {
         return (
-            <li key={nutrient.title} className="recipe-li">
+            <li key={nutrient.title}>
                 {nutrient.title}: {nutrient.amount.toFixed()}{nutrient.unit}
             </li>
         )
@@ -22,5 +22,4 @@ function RecipeNutrition(props) {
         <Fragment>{eachNutrient}</Fragment>
     )
 }
-
 export default RecipeNutrition

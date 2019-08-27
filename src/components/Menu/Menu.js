@@ -57,7 +57,7 @@ class Menu extends Component {
         return (
             <Fragment>
                 <form className="container mt-3" onSubmit={this.handleSubmit}>
-                    <p>Search over 115,000 menu items from over 800 fast food and chain restaurants. For example, McDonald's Big Mac or Starbucks Mocha.</p>
+                    <p className="lead">Search over 115,000 menu items from over 800 fast food and chain restaurants. For example, McDonald's Big Mac or Starbucks Mocha.</p>
                     <div className="form-group">
                         <label>
                             Search: <input className="m-1 form-control" type="text" name="search" value={search} onChange={this.handleChange} />

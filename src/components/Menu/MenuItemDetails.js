@@ -41,8 +41,7 @@ class MenuItem extends Component {
             images: image,
             nutrition: nutrition
         } = this.state.menuItem
-        // const image = this.state.image
-        // const nutrition = this.state.nutrition
+
         return (
             <div className="container">
                 <div>id: {id}</div>

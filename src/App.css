@@ -13,13 +13,6 @@ li {
     object-fit: cover;
 }
 
-.img {
-  min-width: 100%;
-  min-height: 100px; /* You can set the dimensions to whatever you want */
-  max-height: 100px;
-  object-fit: cover;
-}
-
 .footer-widget {
   height: 100%;
 }
@@ -33,5 +26,5 @@ li {
 }
 
 .col-eq{
-    padding-bottom: 40px;
+    padding-bottom: 30px;
 }

@@ -50,7 +50,7 @@ class Home extends Component {
                             <div key={randomRecipe.id} className="col-6 col-md-3 mb-3">
                                 <div className="card card-stuff footer-widget">
                                     <div>
-                                        <img src={randomRecipe.image} className="img-fluid img-home" />
+                                        <img src={randomRecipe.image} className="img-fluid" />
                                         <div className="card-title text-center mt-1 col-eq"><strong>{randomRecipe.title}</strong></div>
                                         <Link to={`recipes/${randomRecipe.id}/information`} className="btn btn-primary m-2 info-button">View Details</Link>
                                     </div>

@@ -53,6 +53,7 @@ class Recipe extends Component {
             analyzedInstructions: instructions,
             nutrition: { nutrients }
         } = this.state.recipe;
+        
         return (
             <div className="container">
                 <div>id: {id}</div>

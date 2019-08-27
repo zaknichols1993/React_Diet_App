@@ -8,12 +8,12 @@ class RecipeNutrients extends Component {
         fields: {
             minCalories: '',
             maxCalories: '',
-            minCarbs: '',
-            maxCarbs: '',
-            minProtein: '',
-            maxProtein: '',
-            minFat: '',
-            maxFat: '',
+            // minCarbs: '',
+            // maxCarbs: '',
+            // minProtein: '',
+            // maxProtein: '',
+            // minFat: '',
+            // maxFat: '',
         },
         errors: {}
     };
@@ -41,13 +41,13 @@ class RecipeNutrients extends Component {
         return formIsValid
     }
 
-    handleChange = field => event => {
-        const value = event.currentTarget.value;
-        console.log(field, value);
+    handleChange = (event) => {
+        const { value, type, name } = event.currentTarget
+        console.log(type, value, name);
         this.setState(prevState => ({
             fields: {
                 ...prevState.fields,
-                [field]: parseInt(value, 10)
+                [name]: type === 'number' ? parseInt(value, 10) : value
             }
         }));
     };
@@ -87,7 +87,7 @@ class RecipeNutrients extends Component {
         return (
             <Fragment>
                 <form className="container mt-3" onSubmit={this.handleSubmit}>
-                    <p>Find a set of recipes that adhere to the given nutritional limits. You may set limits for macronutrients: calories, protein, fat, and carbohydrates.</p>
+                    <p className="lead">Find a set of recipes that adhere to the given nutritional limits. You may set limits for macronutrients: calories, protein, fat, and carbohydrates.</p>
                     <div className="form-group">
                         <label>
                             Minimum Calories:
@@ -96,7 +96,7 @@ class RecipeNutrients extends Component {
                                 type="number"
                                 name="minCalories"
                                 value={fields.minCalories}
-                                onChange={this.handleChange("minCalories")}
+                                onChange={this.handleChange}
                             />
                         </label>
                         <br />
@@ -110,7 +110,7 @@ class RecipeNutrients extends Component {
                                 type="number"
                                 name="maxCalories"
                                 value={fields.maxCalories}
-                                onChange={this.handleChange("maxCalories")}
+                                onChange={this.handleChange}
                             />
                         </label>
                         <br />

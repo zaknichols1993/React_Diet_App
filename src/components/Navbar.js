@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar() {
+const Navbar = () => {
     return (
         <nav className="navbar navbar-light bg-light navbar-expand-lg">
             <Link className="navbar-brand" to="/">Diet and Recipe API</Link>
@@ -13,6 +13,7 @@ function Navbar() {
                     <Link className="nav-item nav-link" to="/recipes">Recipes <span className="sr-only">(current)</span></Link>
                     <Link className="nav-item nav-link" to="/menu">Menu</Link>
                     <Link className="nav-item nav-link" to="/recipe-nutrients">Search Macronutrients</Link>
+                    <Link className="nav-item nav-link" to="/meal-plan">Meal Plan</Link>
                 </div>
             </div>
         </nav>

@@ -10,6 +10,7 @@ import MenuItemDetails from './components/Menu/MenuItemDetails';
 import RecipeNutrients from './components/RecipeNutrients';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import MealPlan from './components/MealPlan';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/meal-plan" component={MealPlan} />
           <Route exact path="/recipes" component={SearchRecipes} />
           <Route exact path="/recipes/:id/information" component={RecipeDetails} />
           <Route exact path="/menu" component={Menu} />

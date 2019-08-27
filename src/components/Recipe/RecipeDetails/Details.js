@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import RecipeData from './RecipeData'
 import Ingredients from './Ingredients'
 import Instructions from './Instructions'
 import Nutrition from './Nutrition'
@@ -35,6 +34,7 @@ class Recipe extends Component {
 
     render() {
         const { isLoaded } = this.state;
+
         if (!isLoaded) return (
             <div className="text-center mt-3">
                 <div className="spinner-border" role="status">
@@ -42,6 +42,7 @@ class Recipe extends Component {
                 </div>
             </div>
         )
+        
         const { id } = this.props.match.params;
         const {
             title,
@@ -53,7 +54,7 @@ class Recipe extends Component {
             analyzedInstructions: instructions,
             nutrition: { nutrients }
         } = this.state.recipe;
-        
+
         return (
             <div className="container">
                 <div>id: {id}</div>

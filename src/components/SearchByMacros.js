@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from 'react-router-dom'
 
-class RecipeNutrients extends Component {
+class SearchByMacros extends Component {
     state = {
         error: null,
         recipes: [],
@@ -118,22 +118,21 @@ class RecipeNutrients extends Component {
                     </div>
                     <input
                         type="submit"
-                        className="btn btn-primary"
+                        className="btn btn-success"
                         onClick={this.handleClick}
                         value="Submit"
                     />
                 </form>
                 <div className="container">
-                    <div className="row m-2">
+                    <div className="row">
                         {recipes.map(recipe => (
-                            <div key={recipe.id} className="col-xs-12 col-md-4 mb-3">
-                                <div className="card card-stuff mt-3">
+                            <div key={recipe.id} className="col-12 col-sm-6 col-md-4 mb-3">
+                                <div className="card card-stuff mt-3 footer-widget">
                                     <img className="img-fluid img" alt="recipe" src={recipe.image} />
-                                    <div className="card-body">
+                                    <div className="card-body col-eq">
                                         <h5 className="card-title">{recipe.title}</h5>
                                         <div>Calories: {recipe.calories}</div>
-                                        <div>Protein: {recipe.protein}</div>
-                                        <Link to={`recipes/${recipe.id}/information`} className="btn btn-primary m-2">View Details</Link>
+                                        <Link to={`recipes/${recipe.id}/information`} className="btn btn-success info-button">View Details</Link>
                                     </div>
                                 </div>
                             </div>
@@ -146,4 +145,4 @@ class RecipeNutrients extends Component {
 }
 
 
-export default RecipeNutrients;
+export default SearchByMacros;

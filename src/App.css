@@ -8,8 +8,7 @@ li {
 
 .img {
     min-width: 100%;
-    min-height: 250px; /* You can set the dimensions to whatever you want */
-    max-height: 250px;
+    height: 200px; /* You can set the dimensions to whatever you want */
     object-fit: cover;
 }
 
@@ -26,5 +25,18 @@ li {
 }
 
 .col-eq{
-    padding-bottom: 30px;
+  padding-bottom: 30px;
+}
+
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image. This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)),
+    url("https://images.pexels.com/photos/1300972/pexels-photo-1300972.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  /* Set a specific height */
+  height: 400px;
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }

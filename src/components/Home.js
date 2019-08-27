@@ -42,24 +42,36 @@ class Home extends Component {
         console.log(randomRecipes)
 
         return (
-            <div className="container">
-                <Link to="/recipes" className="btn btn-primary btn-lg mt-3">Search Recipes!</Link>
-                <div>
-                    <div className="row mt-3">
+            <Fragment>
+                <div className="jumbotron jumbotron-fluid hero-image text-white">
+                    <div className="container">
+                        <h3>Welcome to EasyDiet!</h3>
+                        <p className="lead">EasyDiet is like a nutritionist in your pocket. Tell EasyDiet your target calories and diet type (keto, paleo, vegan, etc.).
+                        EasyDiet will give you a custom diet based on your preferances. You can also search for recipes and restaurant items based on several different dietary requirements.</p>
+                        <Link to="/recipes" className="btn btn-success btn-lg mb-2">Search Recipes!</Link>
+                        <br/>
+                        <Link to="/recipes" className="btn btn-dark btn-lg">Get a Meal Plan!</Link>
+                    </div>
+                </div>
+                <div className="container">
+                    <p className="lead">Random Recipes!</p>
+                    <p>Every time you visit the homepage you'll be shown new recipes!</p>
+                    <br />
+                    <div className="row">
                         {randomRecipes.recipes.map(randomRecipe => (
                             <div key={randomRecipe.id} className="col-6 col-md-3 mb-3">
                                 <div className="card card-stuff footer-widget">
                                     <div>
                                         <img src={randomRecipe.image} className="img-fluid" />
                                         <div className="card-title text-center mt-1 col-eq"><strong>{randomRecipe.title}</strong></div>
-                                        <Link to={`recipes/${randomRecipe.id}/information`} className="btn btn-primary m-2 info-button">View Details</Link>
+                                        <Link to={`recipes/${randomRecipe.id}/information`} className="btn btn-success m-2 info-button">View Details</Link>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
-            </div>
+            </Fragment>
         )
     }
 }

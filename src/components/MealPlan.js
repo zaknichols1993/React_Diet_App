@@ -135,34 +135,34 @@ class MealPlan extends Component {
                     </div>
                     <input
                         type="submit"
-                        className="btn btn-primary"
+                        className="btn btn-success"
                         onClick={this.handleClick}
                         value="Submit"
                     />
                 </form>
                 <div className="container">
-                    <div className="row mt-3">
+                    <div className="row">
                         {isLoaded && mealPlan.items ? mealPlan.items.map(recipe => (
-                            <div key={JSON.parse(recipe.value).id} className="col-6 col-sm-4 mb-3">
+                            <div key={JSON.parse(recipe.value).id} className="col-12 col-sm-2 col-md-4 mb-3">
                                 <div className="card card-stuff mt-3 footer-widget">
                                     <img src={`https://spoonacular.com/recipeImages/${JSON.parse(recipe.value).id}-556x370.jpg`} className="img-fluid img" />
-                                    <div className="card-body">
+                                    <div className="card-body col-eq">
                                         <h5 className="card-title">{JSON.parse(recipe.value).title}</h5>
-                                        <p className="col-eq">Day: {recipe.day}</p>
-                                        <Link to={`recipes/${JSON.parse(recipe.value).id}/information`} className="btn btn-primary info-button">View Details</Link>
+                                        <p className="">Day: {recipe.day}</p>
+                                        <Link to={`recipes/${JSON.parse(recipe.value).id}/information`} className="btn btn-success info-button">View Details</Link>
                                     </div>
                                 </div>
                             </div>
                         )) : null}
                         {isLoaded && mealPlan.meals ? mealPlan.meals.map(meal => (
-                            <div key={meal.id} className="col-6 col-sm-4 mb-3">
+                            <div key={meal.id} className="col-12 col-sm-6 col-md-4 mb-3">
                                 <div className="card card-stuff mt-3 footer-widget">
                                     <img className="img-fluid img" src={`https://spoonacular.com/recipeImages/${meal.image}`} />
-                                    <div className="card-body">
+                                    <div className="card-body col-eq">
                                         <h5 className="card-title">{meal.title}</h5>
                                         <p>Ready In: {meal.readyInMinutes} Minutes</p>
-                                        <p className="col-eq">Servings: {meal.servings}</p>
-                                        <Link to={`recipes/${meal.id}/information`} className="btn btn-primary info-button">View Details</Link>
+                                        <p className="">Servings: {meal.servings}</p>
+                                        <Link to={`recipes/${meal.id}/information`} className="btn btn-success info-button">View Details</Link>
                                     </div>
                                 </div>
                             </div>

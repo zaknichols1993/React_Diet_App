@@ -128,7 +128,7 @@ class SearchRecipes extends Component {
                     </div>
                     <input
                         type="submit"
-                        className="btn btn-primary"
+                        className="btn btn-success"
                         onClick={this.handleClick}
                         value="Submit"
                     />

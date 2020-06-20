@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as HashRouter, Route, Switch } from "react-router-dom"
 
 import './App.css';
 
@@ -14,7 +14,7 @@ import MealPlan from './components/MealPlan';
 
 const App = () => {
   return (
-    <Router>
+    <HashRouter>
       <Fragment>
         <Navbar />
         <Switch>
@@ -27,7 +27,7 @@ const App = () => {
           <Route exact path="/search-by-macros" component={SearchByMacros} />
         </Switch>
       </Fragment>
-    </Router>
+    </HashRouter>
   );
 }
 
